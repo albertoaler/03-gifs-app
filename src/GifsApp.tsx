@@ -1,13 +1,19 @@
 import { useState } from 'react';
+
+import type { Gif } from './gifs/interfaces/gif.interface';
+
 import { GifList } from './gifs/components/GifList';
 import { PreviousSearches } from './gifs/components/PreviousSearches';
-import { mockGifs } from './mock-data/gifs.mock';
 import { CustomHeader } from './shared/components/CustomHeader';
 import { SearchBar } from './shared/components/SearchBar';
+
+import { getGifsByQuery } from './gifs/actions/get-gifs-by-query.action';
 
 export const GifsApp = () => {
 
   const [previousTerms, setPreviousTerms] = useState<string[]>([]);
+
+  const [gifs, setGifs] = useState<Gif[]>([]);
 
   const handleTermsClicked = (term: string) => {
     console.log(term);
@@ -25,12 +31,16 @@ export const GifsApp = () => {
   */
 
   // Here is Fernando's propose
-  const handleSearch = (query: string = '') => {
+  const handleSearch = async (query: string = '') => {
     query = query.trim().toLowerCase();
 
     if (query.length === 0 || previousTerms.includes(query)) return;
 
     setPreviousTerms([query, ...previousTerms.splice(0, 7)]);
+
+    const gifs = await getGifsByQuery(query);
+
+    setGifs(gifs);
   };
 
   return (
@@ -57,7 +67,7 @@ export const GifsApp = () => {
       />
 
       {/* Gifs */}
-      <GifList gifs={mockGifs} />
+      <GifList gifs={gifs} />
     </>
   );
 };
