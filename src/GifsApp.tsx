@@ -7,14 +7,30 @@ import { SearchBar } from './shared/components/SearchBar';
 
 export const GifsApp = () => {
 
-  const [previousTerms, setPreviousTerms] = useState(['jujutsu kaisen']);
+  const [previousTerms, setPreviousTerms] = useState<string[]>([]);
 
   const handleTermsClicked = (term: string) => {
     console.log(term);
   };
 
+  // Here is my propose to the homework:
+  /*
   const handleSearch = (query: string) => {
-    console.log(query);
+    query = query.toLowerCase().trim();
+
+    if (!queryModified || previousTerms.includes(queryModified) || previousTerms.length >= 8) return;
+
+    setPreviousTerms([queryModified, ...previousTerms]);
+  }
+  */
+
+  // Here is Fernando's propose
+  const handleSearch = (query: string = '') => {
+    query = query.trim().toLowerCase();
+
+    if (query.length === 0 || previousTerms.includes(query)) return;
+
+    setPreviousTerms([query, ...previousTerms.splice(0, 7)]);
   };
 
   return (
