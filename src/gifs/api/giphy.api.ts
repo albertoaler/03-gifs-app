@@ -5,6 +5,6 @@ export const giphyApi = axios.create({
   params: {
     api_key: import.meta.env.VITE_GIPHY_API_KEY,
     rating: 'g',
-    lang: 'en'
+    lang: 'es'
   }
 })
