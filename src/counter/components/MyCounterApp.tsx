@@ -1,7 +1,11 @@
 import { useCounter } from "../hooks/useCounter";
 
-export const MyCounterApp = () => {
-  const { counter, handleAdd, handleSubtract, handleReset } = useCounter();
+interface Props {
+  initialValue?: number;
+}
+
+export const MyCounterApp = ({ initialValue }: Props) => {
+  const { counter, handleAdd, handleSubtract, handleReset } = useCounter(initialValue);
 
   return (
     <div
