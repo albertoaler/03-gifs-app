@@ -4,6 +4,8 @@ import type { GiphyResponse } from '../interfaces/giphy.response';
 import type { Gif } from '../interfaces/gif.interface';
 
 export const getGifsByQuery = async (query: string): Promise<Gif[]> => {
+  query = query.trim().toLowerCase();
+  if (query.length === 0) return [];
 
   try {
     // We will use axios instead of fetch

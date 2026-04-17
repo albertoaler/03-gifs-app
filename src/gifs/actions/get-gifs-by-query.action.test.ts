@@ -8,7 +8,7 @@ import { giphyApi } from "../api/giphy.api";
 import { giphySearchResponseMock } from "../../../tests/mock/giphy.response.data"
 
 describe('getGifsByQuery', () => {
-  // I have to put the consoleErrorSpy outside the test because i still had
+  // I had to put the consoleErrorSpy outside the test because i still have
   // the console.error logs in the terminal
   const consoleErrorSpy = vi.spyOn(console, 'error')
     .mockImplementation(() => { });
@@ -21,6 +21,7 @@ describe('getGifsByQuery', () => {
     axiosMock = new AxiosMockAdapter(giphyApi);
   })
 
+  // This was using the original function, not the mock
   // test('should return a list of gifs', async () => {
   //   const gifs = await getGifsByQuery('jujutsu')
   //   const [gif1] = gifs
@@ -41,11 +42,11 @@ describe('getGifsByQuery', () => {
   // To use a function that returns a promise we can make async the anonymous function
   // for the test
   test('should return a list of gifs', async () => {
-    // We use onGet to simulate the endpoint and reply to mock the reply response
+    // We use 'onGet' to simulate the endpoint and 'reply' to mock the reply response
     axiosMock.onGet('/search').reply(200, giphySearchResponseMock)
 
-    // Here Vitest is using the mock instead a real api request to evaluate the
-    // manage and transform of the data that getGifsByQuery handle
+    // Here Vitest is using the mock instead the real api request to evaluate the
+    // management and transformation of the data that getGifsByQuery handle
     const gifs = await getGifsByQuery('goku')
 
     expect(gifs.length).toBe(10);
@@ -65,7 +66,8 @@ describe('getGifsByQuery', () => {
   })
 
   test('should return an empty list of gifs if query is empty', async () => {
-    axiosMock.reset();
+    axiosMock.resetHandlers();
+    axiosMock.restore();
 
     const gifs = await getGifsByQuery('');
 
@@ -90,5 +92,6 @@ describe('getGifsByQuery', () => {
 
     // Restore the console.error mock for future tests
     consoleErrorSpy.mockRestore();
+    axiosMock.restore();
   })
 })
