@@ -22,6 +22,11 @@ export const useGifs = () => {
       setGifs(gifsCache.current[term]);
       return;
     }
+
+    const gifs = await getGifsByQuery(term);
+    setGifs(gifs);
+    setPreviousTerms(prevState => [term, ...prevState].splice(0, 8));
+    gifsCache.current[term] = gifs;
   };
 
   // Here is my propose to the homework:
@@ -46,7 +51,7 @@ export const useGifs = () => {
       return;
     }
 
-    setPreviousTerms([query, ...previousTerms.splice(0, 7)]);
+    setPreviousTerms(prevState => [query, ...prevState].splice(0, 8));
 
     const gifs = await getGifsByQuery(query);
 
