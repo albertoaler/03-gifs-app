@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, expectTypeOf, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 // We use the axios-mock-adapter to mock an axios instance
 import AxiosMockAdapter from 'axios-mock-adapter';
 

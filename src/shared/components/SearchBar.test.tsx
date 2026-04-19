@@ -4,7 +4,8 @@ import { SearchBar } from "./SearchBar";
 
 describe('SearchBar', () => {
   test('should render searchbar correctly', () => {
-    const { container } = render(<SearchBar onQuery={() => { }} />);
+    // const { container } = render(<SearchBar onQuery={() => { }} />);
+    render(<SearchBar onQuery={() => { }} />);
 
     // expect(container).toMatchSnapshot();
     expect(screen.getByRole('textbox')).toBeDefined();
