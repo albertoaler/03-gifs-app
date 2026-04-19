@@ -25,3 +25,6 @@ dist-ssr
 
 # environment variables
 .env
+
+# coverage folder
+coverage
